@@ -52,8 +52,25 @@ public class NaiveBayesClassifier {
      *
      * @return the most likely hypothesis as a string
      */
-    public String printEstimate() {
+    public String classify(String[] vector) {
+        String maxProbabilityHypothesis = null;
+        float maxProbability = 0F;
 
+        for (String hypothesis : priorHypothesisProbabilityMap.keySet()) {
+            float probability = priorHypothesisProbabilityMap.get(hypothesis);
+            for (int i = 0 ; i < vector.length ; i++) {
+                String condition = vector[i];
+                probability *= conditionalHypothesisProbabilityMap.get(hypothesis).get(i).get(condition);
+            }
+            if (probability > maxProbability) {
+                maxProbability = probability;
+                maxProbabilityHypothesis = hypothesis;
+            }
+        }
+
+        System.out.println("The estimator estimates hypothesis " + maxProbabilityHypothesis + " with a probability of " + maxProbability);
+
+        return maxProbabilityHypothesis;
     }
 
     public static void main(String args[]) {
