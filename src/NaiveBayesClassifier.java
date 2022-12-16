@@ -16,7 +16,7 @@ public class NaiveBayesClassifier {
     private void estimateProbabilitiesFromTrainingData(String[][] trainingData) {
         // re-calculating P(H) and by consequence also counting the entries for each hypothesis
         for (String[] vector : trainingData) {
-            String hypothesis = vector[trainingData.length - 1];
+            String hypothesis = vector[vector.length - 1];
 
             if (!priorHypothesisProbabilityMap.containsKey(hypothesis))
                 priorHypothesisProbabilityMap.put(hypothesis, 1F / trainingData.length);
@@ -26,14 +26,14 @@ public class NaiveBayesClassifier {
 
         // now that we have counted the hypotheses, we can calculate the conditional probabilities
         for(String[] vector : trainingData) {
-            String hypothesis = vector[trainingData.length - 1];
+            String hypothesis = vector[vector.length - 1];
             int hypothesisCount = (int) (priorHypothesisProbabilityMap.get(hypothesis) * trainingData.length);
-            if (conditionalHypothesisProbabilityMap.containsKey(hypothesis)) {
+            if (!conditionalHypothesisProbabilityMap.containsKey(hypothesis)) {
                 conditionalHypothesisProbabilityMap.put(hypothesis, new ArrayList<HashMap<String, Float>>());
             }
 
             ArrayList<HashMap<String, Float>> evidenceList = conditionalHypothesisProbabilityMap.get(hypothesis);
-            for (int i = 0 ; i < vector.length - 2 ; i++) {
+            for (int i = 0 ; i < vector.length - 1 ; i++) {
                 if (i == evidenceList.size())
                     evidenceList.add(new HashMap<String, Float>());
 
@@ -74,6 +74,27 @@ public class NaiveBayesClassifier {
     }
 
     public static void main(String args[]) {
-        ArrayList<Integer> test = new ArrayList<>();
+        String[][] trainingSet = {
+            // Outlook, Temperature, Humidity, Wind -> Play Tennis
+            {"Sunny", "Hot", "High", "Weak", "No"},
+            {"Sunny", "Hot", "High", "Strong", "No"},
+            {"Overcast", "Hot", "High", "Weak", "Yes"},
+            {"Rain", "Mild", "High", "Weak", "Yes"},
+            {"Rain", "Cool", "Normal", "Weak", "Yes"},
+            {"Rain", "Cool", "Normal", "Strong", "No"},
+            {"Overcast", "Cool", "Normal", "Strong", "Yes"},
+            {"Sunny", "Mild", "High", "Weak", "No"},
+            {"Sunny", "Cool", "Normal", "Weak", "Yes"},
+            {"Rain", "Mild", "Normal", "Weak", "Yes"},
+            {"Sunny", "Mild", "Normal", "Strong", "Yes"},
+            {"Overcast", "Mild", "High", "Strong", "Yes"},
+            {"Overcast", "Hot", "Normal", "Weak", "Yes"},
+            {"Rain", "Mild", "High", "Strong", "No"}
+        };
+
+        String[] newInstance = {"Sunny", "Cool", "High", "Strong"};
+
+        NaiveBayesClassifier naiveBayesClassifier = new NaiveBayesClassifier(trainingSet);
+        naiveBayesClassifier.classify(newInstance);
     }
 }
