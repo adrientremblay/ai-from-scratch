@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+// TODO: Add smoothing
+// TODO: Log addition instead of product
 public class NaiveBayesClassifier {
     HashMap<String, Float> priorHypothesisProbabilityMap = new HashMap<String, Float>();
     HashMap<String, ArrayList<HashMap<String, Float>>> conditionalHypothesisProbabilityMap = new HashMap<String, ArrayList<HashMap<String, Float>>>();
