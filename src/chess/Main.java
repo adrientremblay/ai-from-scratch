@@ -19,6 +19,7 @@ public class Main {
 
     private static void printBoard(Piece[][] board) {
         for (int row  = 0 ; row < board.length ; row++) {
+            System.out.print((board.length - row) + " | ");
             for (int col = 0 ; col < board[row].length ; col++)
                 if (board[row][col] == null)
                     System.out.print(". ");
@@ -26,7 +27,7 @@ public class Main {
                     System.out.print(board[row][col].toString() + " ");
             System.out.println();
         }
-        System.out.println("----------------");
-        System.out.println("a b c d e f g h");
+        System.out.println("--------------------");
+        System.out.println("    a b c d e f g h");
     }
 }
