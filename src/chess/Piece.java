@@ -30,4 +30,8 @@ public enum Piece {
     public Player getPlayer() {
         return player;
     }
+
+    public Type getType() {
+        return type;
+    }
 }
