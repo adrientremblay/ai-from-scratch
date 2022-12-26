@@ -1,3 +1,4 @@
+// TODO: Perceptron with bias
 public class Perceptron {
     float[] weights;
     float threshold;
