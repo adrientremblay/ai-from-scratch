@@ -27,9 +27,30 @@ public class Main {
             String input = s.nextLine();
             String[] stringSplit = input.split(" ");
             if (stringSplit.length != 2) {
-                System.err.println("NO!");
+                System.err.println("NOT A VALID MOVE!");
                 continue;
             }
+
+            String[] source = stringSplit[0].split("");
+            int sourceRow = board.length - Integer.valueOf(source[1]); // unchecked
+            int sourceCol = source[0].charAt(0) - 'a'; // unchecked
+            if (sourceRow < 0 || sourceRow > board.length - 1 || sourceCol < 0 || sourceCol > board.length - 1) {
+                System.err.println("NOT A VALID MOVE!");
+                continue;
+            }
+            Piece sourcePiece = board[sourceRow][sourceCol];
+
+            String[] dest = stringSplit[1].split("");
+            int destRow = board.length - Integer.valueOf(dest[1]); // unchecked
+            int destCol = dest[0].charAt(0) - 'a'; // unchecked
+            if (destRow < 0 || destRow > board.length - 1 || destCol < 0 || destCol > board.length - 1) {
+                System.err.println("NOT A VALID MOVE!");
+                continue;
+            }
+            Piece destPiece = board[destRow][destCol];
+
+            board[sourceRow][sourceCol] = null;
+            board[destRow][destCol] = sourcePiece;
         }
     }
 
@@ -40,7 +61,7 @@ public class Main {
                 if (board[row][col] == null)
                     System.out.print(". ");
                 else
-                    System.out.print((board[row][col].getPlayer() == Player.WHITE ? "\u001B[40m" : "\u001B[47m" ) + board[row][col].toString() + "\u001B[0m" + " ");
+                    System.out.print((board[row][col].getPlayer() == Player.WHITE ? "\u001B[47m" : "\u001B[40m" ) + board[row][col].toString() + "\u001B[0m" + " ");
             System.out.println();
         }
         System.out.println("--------------------");
