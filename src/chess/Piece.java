@@ -26,4 +26,8 @@ public enum Piece {
     public String toString() {
         return type.toString();
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }
